@@ -1,3 +1,4 @@
+import json
 from flask import (
     Flask, request, render_template,
     redirect, make_response, session, url_for,
@@ -5,6 +6,7 @@ from flask import (
     )
 import os
 import pandas as pd
+from collections import OrderedDict
 
 if os.path.exists("env.py"):
     import env
@@ -108,7 +110,11 @@ def index():
 
 @app.route('/get_data')
 def get_data():
-    return jsonify(data_list)
+    json_data = json.dumps(data_list)
+
+    response = make_response(json_data)
+    response.headers['Content-Type'] = 'application/json'
+    return response
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
@@ -170,8 +176,13 @@ def upload_file():
                     'Left Foot', 'Right Foot', 'Spd', 'Jum', 'Str', 'Work',
                     'Height'] + data_calc_values]
 
+                ordered_data = (squad.fillna('')
+                .to_dict(orient='records', into=OrderedDict))
+
                 global data_list
-                data_list = squad.fillna('').to_dict(orient='records')
+                data_list = ordered_data
+                
+                print(data_list)
 
                 session['selected_options'] = selected_options
                 return redirect(url_for('index'))
