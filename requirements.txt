@@ -1,16 +1,9 @@
 asgiref==3.7.2
 blinker==1.7.0
-cachelib==0.10.2
 click==8.1.7
 Flask==3.0.0
-Flask-Session==0.5.0
-html5lib==1.1
 itsdangerous==2.1.2
-lxml==4.9.3
-numpy==1.26.1
-pandas==2.1.2
-pytz==2023.3.post1
+memory-profiler==0.61.0
 scout-apm==3.0.2
-tzdata==2023.3
 Werkzeug==3.0.1
 wrapt==1.16.0
